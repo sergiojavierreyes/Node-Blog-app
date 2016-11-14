@@ -1,0 +1,17 @@
+doctype html
+html
+	head
+	body
+		h2= user.name
+		h3= user.email
+
+		a(href='/') home
+		br
+		a(href='/logout') log out
+
+		form(action='/userpost', method='POST')
+			textarea(type='text', name='header' placeholder='Wassup?')
+			br
+			input(require type='submit', value='Tell em!')
+		each thing in message
+			h4 #{thing.title}
