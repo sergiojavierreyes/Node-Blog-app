@@ -1,17 +1,30 @@
 doctype html
 html
 	head
+		title My Profile
+		link(href='/resources/css/materialize.min.css' type="text/css" rel="stylesheet")
+
 	body
-		h2= user.name
-		h3= user.email
-
-		a(href='/') home
-		br
-		a(href='/logout') log out
-
+		nav.nav-wrapper
+			h2.brand-logo Sick Blog n Stuff!
+			ul#nav-mobile.right.hide-on-med-and-down
+				li
+					a(href='/') Home
+				li
+					a(href='/board') The Board
+				li
+					a(href='/logout') Log out
+	div.container
+		h2.center-align= user.name
 		form(action='/userpost', method='POST')
 			textarea(type='text', name='header' placeholder='Wassup?')
 			br
 			input(require type='submit', value='Tell em!')
+
 		each thing in message
-			h4 #{thing.title}
+			h5.center-align= user.name
+			p.center-align #{thing.title}
+
+
+	script(src="/resources/js/jquery-3.1.1.min.js")
+	script(src="/resources/js/materialize.min.js")

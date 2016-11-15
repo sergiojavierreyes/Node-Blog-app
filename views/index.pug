@@ -1,7 +1,9 @@
 doctype html
 html
 	head
-		script(src='http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js')
+		title Welcome!
+		link(href='/resources/css/materialize.min.css' type="text/css" rel="stylesheet")
+
 		script.
 			$(document).ready(function () {
 				$('#submit').click(function(event) {
@@ -12,21 +14,30 @@ html
 				});
 			});
 	body
-		if user
-			a(href='/profile') view profile
-			br
-			a(href='/logout') log out
-		else
-			form(action='/login' method='post')
-				label email
-				br
-				input#email(type='email' name='email')
-				br
-				label password
-				br
-				input#password(name='password' type='password' required)
-				br
-				input(type='submit' value='login' id='submit')
-			a(href='/register') Register NOW NOW!!
+	if user
+		nav.nav-wrapper
+			h2.brand-logo Sick Blog n Stuff!
+			ul#nav-mobile.right.hide-on-med-and-down
+				li
+					a(href='/profile') Mirror, Mirror on the Wall!
+				li
+					a(href='/logout') I'm out, Peace!
 
-		h2#error-message= message
+	else
+		div.container
+			h1.center-align Log in for some extreme fun!!
+			form.center-align(action='/login' method='post')
+					label email
+					input#email(type='email' name='email')
+					label password
+					input#password(name='password' type='password' required)
+					input(type='submit' value='login' id='submit')
+					br
+					br
+					a(href='/register') Register NOW NOW!!
+
+			h2.center-align#error-message= message
+
+
+	script(src="/resources/js/jquery-3.1.1.min.js")
+	script(src="/resources/js/materialize.min.js")

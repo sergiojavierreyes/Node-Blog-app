@@ -1,0 +1,25 @@
+.headerbg {
+	background: white;
+	opacity: 0.7;
+}
+
+.spaceplz {
+	padding-top: 70px;
+	
+}
+
+body {
+	background: url(/resources/media/background.jpg) no-repeat;
+	background-size: cover;
+	padding-top: 70px;
+}
+
+
+.footer{
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	height: 100px;
+	width: 100%;
+}
+

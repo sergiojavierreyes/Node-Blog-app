@@ -9,7 +9,7 @@ var session = require('express-session');
 app.set('view engine', 'pug')
 app.set('views', __dirname + "/views")
 
-app.use(express.static(__dirname + '/static'))
+app.use('/resources',express.static(__dirname + '/static'))
 app.use(bodyParser.urlencoded({extended:true}))
 app.use(session({
 	secret: 'random stuff',
@@ -51,9 +51,12 @@ User.hasMany(Comment);
 Comment.belongsTo(User);
 
 app.get('/', function (request, response) {
-	response.render('index', {
-		message: request.query.message,
-		user: request.session.user
+	Message.findAll({
+	}).then(show =>{
+		response.render('index', {
+			message: request.query.message,
+			user: request.session.user
+		})
 	});
 });
 
@@ -63,9 +66,14 @@ app.get('/profile', function (request, response) {
 		response.redirect('/?message=' + encodeURIComponent("Please log in to view your profile."));
 	} else {
 		Message.findAll({
-			include: [User]
-		}).then(post =>{
-			response.render('profile', {message: post, user})
+			where: {
+				userId: request.session.user.id
+			}
+		})
+		.then(post =>{
+			response.render('profile', {
+				message: post, user
+			})
 		})
 	}
 });
@@ -134,6 +142,37 @@ app.post('/userpost', (req, res) => {
 	})
 })
 
+app.get('/board', (req,res)=>{
+	var user = req.session.user;
+	Message.findAll({
+	})
+	.then((post) =>{
+		res.render('board', {
+			message: post,
+			user: user
+		})
+	})
+})
+
+app.post('/comment', (req,res) => {
+	Comment.create({
+		messagebox: req.body.comment
+	}),
+	User.findOne({
+		where: {
+			id: req.session.user.id
+		}
+	}),
+	Message.findOne({
+		where: {
+			id: req.body.id
+		}
+	})
+	.then(post =>{
+		res.render('board')
+	})
+
+})
 
 db.sync({force: false}).then(db => {
 	console.log('We synced bruh!')
