@@ -1,25 +1,19 @@
-.headerbg {
-	background: white;
-	opacity: 0.7;
+.titleName{
+	padding: 20px;
 }
 
-.spaceplz {
-	padding-top: 70px;
-	
+#messageStyle {
+	font-color: #90a4ae blue-grey lighten-2;
+	font-style: oblique;
+	font-size: 13px;
+}
+
+#commentTitle {
+	font-weight:bold;
+	font-size: 20px;
+	font-style: italic;
 }
 
 body {
-	background: url(/resources/media/background.jpg) no-repeat;
-	background-size: cover;
-	padding-top: 70px;
+	font-family: "Andale Mono", AndaleMono, monospace;
 }
-
-
-.footer{
-	position: absolute;
-	left: 0;
-	bottom: 0;
-	height: 100px;
-	width: 100%;
-}
-

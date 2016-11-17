@@ -2,8 +2,9 @@ html
 	head
 		title The Board
 		link(href='/resources/css/materialize.min.css' type="text/css" rel="stylesheet")
+		link(href='/resources/css/custom.css' type="text/css" rel="stylesheet")
 	body
-		nav.nav-wrapper
+		nav.nav-wrapper.messageStyle
 			h2.brand-logo Sick Blog n Stuff!
 			ul#nav-mobile.right.hide-on-med-and-down
 				li
@@ -11,14 +12,17 @@ html
 				li
 					a(href='/logout') I'm Out, Peace!
 	div.container
-		h1.center-align The People's Word 
+		h1.titleName.center-align The People's Word 
 
+	div.container
 		each thing in message
-			h4.center-align= thing.title
-			h6.center-align= thing.user.name
-
+			h3.center-align= thing.title
+			h5.center-align= thing.user.name
+			br
 			each comment in thing.comments
-				p= comment.messagebox
+				ul.collection
+					li#commentTitle.collection-item= comment.user.name 
+					li#messageStyle.collection-item= comment.messagebox
 				
 			form.center-align(action='/comment', method='POST')
 				input(hidden type='text' name='id' value=thing.id )
