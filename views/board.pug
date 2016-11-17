@@ -14,14 +14,18 @@ html
 		h1.center-align The People's Word 
 
 		each thing in message
-			h5.center-align= thing.title
+			h4.center-align= thing.title
+			h6.center-align= thing.user.name
 
-
+			each comment in thing.comments
+				p= comment.messagebox
+				
 			form.center-align(action='/comment', method='POST')
-				input(type='text', name='id', hidden)
+				input(hidden type='text' name='id' value=thing.id )
 				input(type='text', placeholder='Oehhh Watcha say?', name='comment')
 				br
 				input(require type='submit', value='Comment')
+
 
 		script(src="/resources/js/jquery-3.1.1.min.js")
 		script(src="/resources/js/materialize.min.js")

@@ -129,6 +129,7 @@ app.post('/register', (req,res) => {
 
 
 app.post('/userpost', (req, res) => {
+	
 	User.findOne({
 		where: {
 			id: req.session.user.id
@@ -143,41 +144,41 @@ app.post('/userpost', (req, res) => {
 })
 
 app.get('/board', (req,res)=>{
-	var user = req.session.user;
+	var user = req.session.user
+
 	Message.findAll({
-	})
-	.then((post) =>{
+		include: [{
+			model: Comment,
+			include: [User]
+		}, {
+			model: User
+		}]
+	}).then( post => {
 		res.render('board', {
+			user: user,
 			message: post,
-			user: user
 		})
 	})
 })
 
 app.post('/comment', (req,res) => {
-	Comment.create({
-		messagebox: req.body.comment
-	}),
 	User.findOne({
 		where: {
 			id: req.session.user.id
-		}
-	}),
-	Message.findOne({
-		where: {
-			id: req.body.id
-		}
+		} 
+	}).then((user)=>{	
+		user.createComment({
+			messagebox: req.body.comment,
+			messageId: req.body.id
+		})
+	}).then(post =>{
+		res.redirect('board')
 	})
-	.then(post =>{
-		res.render('board')
-	})
-
 })
 
 db.sync({force: false}).then(db => {
 	console.log('We synced bruh!')
 })
-
 
 app.listen(1337,() => {
 	console.log('Up and Running at port 1337!')

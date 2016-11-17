@@ -24,9 +24,10 @@ html
 					a(href='/logout') I'm out, Peace!
 
 	else
-		div.container
-			h1.center-align Log in for some extreme fun!!
-			form.center-align(action='/login' method='post')
+	div.container
+		h1.center-align Log in for some extreme fun!!
+		br
+		form.center-align(action='/login' method='post')
 					label email
 					input#email(type='email' name='email')
 					label password
@@ -34,9 +35,11 @@ html
 					input(type='submit' value='login' id='submit')
 					br
 					br
-					a(href='/register') Register NOW NOW!!
+					a.waves-effect.waves-light.btn(href='/register') Register NOW NOW!!
+					br
+					br
 
-			h2.center-align#error-message= message
+		h3.center-align#error-message= message
 
 
 	script(src="/resources/js/jquery-3.1.1.min.js")
