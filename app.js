@@ -5,6 +5,7 @@ const app = express()
 const pg = require ('pg')
 const bodyParser = require ('body-parser')
 var session = require('express-session');
+var bcrypt = require('bcrypt');
 
 app.set('view engine', 'pug')
 app.set('views', __dirname + "/views")
@@ -50,6 +51,8 @@ Comment.belongsTo(Message);
 User.hasMany(Comment);
 Comment.belongsTo(User);
 
+
+
 app.get('/', function (request, response) {
 	Message.findAll({
 	}).then(show =>{
@@ -94,12 +97,23 @@ app.post('/login', bodyParser.urlencoded({extended: true}), function (request, r
 			email: request.body.email
 		}
 	}).then(function (user) {
-		if (user !== null && request.body.password === user.password) {
-			request.session.user = user;
-			response.redirect('/profile');
+		var hash = user.password
+
+		bcrypt.compare(request.body.password, hash, (err, res) => { 
+		if (user !== null && res == true) {
+			request.session.user = user
+			response.redirect('/profile')
+			console.log(hash)
+
+			// (user !== null && request.body.password === user.password) {
+			// request.session.user = user;
+			// response.redirect('/profile');
+			
+
 		} else {
 			response.redirect('/?message=' + encodeURIComponent("Invalid email or password."));
 		}
+	})
 	}, function (error) {
 		response.redirect('/?message=' + encodeURIComponent("Invalid email or password."));
 	});
@@ -119,12 +133,17 @@ app.get('/register', (req,res) => {
 })
 
 app.post('/register', (req,res) => {
-	User.create({
-		name: req.body.name,
-		email: req.body.email,
-		password: req.body.password
+
+	bcrypt.hash(req.body.password, 5, function(err,hash){
+		console.log(hash)
+
+		User.create({
+			name: req.body.name,
+			email: req.body.email,
+			password: hash
+		})
+		res.redirect('/')
 	})
-	res.redirect('/')
 })
 
 
