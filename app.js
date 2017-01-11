@@ -7,9 +7,13 @@ const bodyParser = require ('body-parser')
 var session = require('express-session');
 var bcrypt = require('bcrypt');
 
+
+//set views
 app.set('view engine', 'pug')
 app.set('views', __dirname + "/views")
 
+
+//middleware
 app.use('/resources',express.static(__dirname + '/static'))
 app.use(bodyParser.urlencoded({extended:true}))
 app.use(session({
