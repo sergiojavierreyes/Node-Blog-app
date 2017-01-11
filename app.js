@@ -20,7 +20,7 @@ app.use(session({
 
 //Define database structure
 
-let db = new sequelize('blogapp', 'sergioreyesgomezdeliano', 'mypassword', {
+let db = new sequelize('blogapp', process.env.POSTGRES_USER, process.env.POSTGRES_PASSWORD, {
 	server:'localhost',
 	dialect: 'postgres'
 })
